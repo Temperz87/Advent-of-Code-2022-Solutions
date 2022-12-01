@@ -6,21 +6,51 @@ using TextCopy;
 
 class Program
 {
-    private static void printAnswer(object text)
-    {
-        ClipboardService.SetText(text.ToString());
-        Console.WriteLine(text.ToString());
-    }
-
-
     private static void Main(string[] args)
     {
         Day1();
+    }
+    
+    private static void PrintAnswer(object text)
+    {
+        ClipboardService.SetText(text.ToString());
+        Console.ForegroundColor = ConsoleColor.Red;
+        Console.WriteLine(text.ToString());
+        Console.ForegroundColor = ConsoleColor.White;
+    }
+
+    private static void Print(string text, ConsoleColor color = ConsoleColor.Green)
+    {
+        Console.ForegroundColor = color;
+        Console.WriteLine(text.ToString());
+        Console.ForegroundColor = ConsoleColor.White;
     }
 
     private static void Day1()
     {
         string[] input = InputGetter.GetStringInputs();
+        List<int> allCalories = new List<int>();
+        int currentcalorie = 0;
+        foreach (string str in input)
+        {
+            if (str == "")
+            {
+                allCalories.Add(currentcalorie);
+                currentcalorie = 0;
+                continue;
+            }
+            currentcalorie += int.Parse(str);
+        }
+        allCalories.Add(currentcalorie);
+        int max = 0;
+        foreach (int i in allCalories)
+        {
+            if (i > max)
+                max = i;
+        }
+        allCalories.Sort();
+        //PrintAnswer(max); for part 1
+        PrintAnswer(allCalories[allCalories.Count - 1] + allCalories[allCalories.Count - 2] + allCalories[allCalories.Count - 3]); // for part 2
     }
 }
 
