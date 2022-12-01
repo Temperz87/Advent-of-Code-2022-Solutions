@@ -24,18 +24,19 @@ class Program
     }
 }
 
-
 class InputGetter
 {
+    private const string filePath = @"C:\Users\newid\source\repos\Aoc 2022 College is Stressful Year\Aoc 2022 College is Stressful Year\inputs.txt"; // I can't be bothered to do this properly so uhhhhhhhhhhhhhhhhhhhhhhhhhh
     public static string[] GetStringInputs()
     {
-        string[] lines = File.ReadAllLines(@"C:\Users\newid\source\repos\AoC 2022 College is Stressful Year\AoC 2022 College is Stressful Year\inputs.txt");
+
+        string[] lines = File.ReadAllLines(filePath);
         return lines;
     }
 
     public static long[] GetLongInputs()
     {
-        string[] lines = File.ReadAllLines(@"inputs.txt");
+        string[] lines = File.ReadAllLines(filePath);
         long[] longs = new long[lines.Length];
         for (int i = 0; i < lines.Length; i++)
         {
