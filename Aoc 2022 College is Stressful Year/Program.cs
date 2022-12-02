@@ -85,7 +85,7 @@ class Program
     }
 
 
-    public static void Day2P2() // Honestly was easier in the moment to split this into two functions
+    public static void Day2P2() // Honestly was easier in the moment to split this day into two functions
     {
         string[] inputs = InputGetter.GetStringInputs();
         int score = 0;
