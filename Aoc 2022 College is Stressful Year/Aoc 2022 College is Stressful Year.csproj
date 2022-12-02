@@ -9,4 +9,10 @@
   <ItemGroup>
     <PackageReference Include="TextCopy" Version="6.2.0" />
   </ItemGroup>
+
+  <ItemGroup>
+    <None Update="inputs.txt">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>
