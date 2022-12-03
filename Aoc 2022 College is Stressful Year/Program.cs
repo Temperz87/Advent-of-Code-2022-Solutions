@@ -8,10 +8,10 @@ class Program
 {
     private static void Main(string[] args)
     {
-        Day2P2();
+        Day3();
     }
-    
-    private static void PrintAnswer(object text)
+
+    private static void PrintAnswer(object text) // Prints to console in a funny color and copies said answer to the clipboard so I can save 0.01 seconds 
     {
         ClipboardService.SetText(text.ToString());
         Console.ForegroundColor = ConsoleColor.Red;
@@ -19,14 +19,14 @@ class Program
         Console.ForegroundColor = ConsoleColor.White;
     }
 
-    private static void Print(string text, ConsoleColor color = ConsoleColor.Green)
+    private static void Print(string text, ConsoleColor color = ConsoleColor.Green) // Just an easy function to Print, as typing Console.WriteLine() takes more time, and also colors are easier to do this way for me
     {
         Console.ForegroundColor = color;
         Console.WriteLine(text.ToString());
         Console.ForegroundColor = ConsoleColor.White;
     }
 
-    private static void Day1() // Completed P1 in 2:42 with a rank of 928, P2 in 4:81 wiht a rank of 921
+    private static void Day1() // Completed P1 in 2:42 with a rank of 928, P2 in 4:81 wiht a rank of 921, puzzle was opened in 0:02
     {
         string[] input = InputGetter.GetStringInputs();
         List<int> allCalories = new List<int>();
@@ -53,18 +53,18 @@ class Program
         PrintAnswer(allCalories[allCalories.Count - 1] + allCalories[allCalories.Count - 2] + allCalories[allCalories.Count - 3]); // for part 2
     }
 
-    public static void Day2P1() // Completed P1 in 12:48 with a rank of 4581, P2 in 19:30 with a rank of 4345
+    public static void Day2P1() // Completed P1 in 12:48 with a rank of 4581, P2 in 19:30 with a rank of 4345, puzzle was opened in 0:02
     {
-        string[] inputs = InputGetter.GetStringInputs();
+        string[] input = InputGetter.GetStringInputs();
         int score = 0;
-        foreach (string s in inputs)
+        foreach (string s in input)
         {
             if (s[0] == 'C' && s[2] == 'X')
                 score += 7;
             else if (s[0] == 'A' && s[2] == 'Y')
-                score+=8;
+                score += 8;
             else if (s[0] == 'B' && s[2] == 'Z')
-                score+=9;
+                score += 9;
             else if (s[0] == 'A' && s[2] == 'X')
                 score += 4;
             else if (s[0] == 'B' && s[2] == 'Y')
@@ -84,12 +84,11 @@ class Program
         PrintAnswer(score);
     }
 
-
     public static void Day2P2() // Honestly was easier in the moment to split this day into two functions
     {
-        string[] inputs = InputGetter.GetStringInputs();
+        string[] input = InputGetter.GetStringInputs();
         int score = 0;
-        foreach (string s in inputs)
+        foreach (string s in input)
         {
             if (s[2] == 'X')
             {
@@ -121,6 +120,59 @@ class Program
         }
         PrintAnswer(score);
     }
+
+    public static void DayP1()
+    {
+        string[] input = InputGetter.GetStringInputs();
+        int sum = 0;
+        foreach (string str in input)
+        {
+            string str1 = str.Substring(0, (str.Length) / 2);
+            string str2 = str.Substring((str.Length - 1) / 2 + 1);
+            Console.WriteLine(str1 + " : " + str2);
+            foreach (char c in str1.ToCharArray())
+            {
+                if (str2.ToCharArray().Contains(c))
+                {
+                    int toAdd = 0;
+                    if (c.ToString().ToUpper() == c.ToString())
+                        toAdd += c - 38;
+                    else
+                        toAdd += c - 96;
+                    sum += toAdd;
+                    Console.WriteLine("Added " + toAdd);
+                    break;
+                }
+            }
+        }
+        PrintAnswer(sum);
+    }
+
+    public static void Day3P2()
+    {
+        string[] input = InputGetter.GetStringInputs();
+        int sum = 0;
+        for (int i = 0; i < input.Length; i += 3)
+        {
+            string str1 = input[i];
+            string str2 = input[i + 1];
+            string str3 = input[i + 2];
+            foreach (char c in str1.ToCharArray())
+            {
+                if (str2.ToCharArray().Contains(c) && str3.ToCharArray().Contains(c))
+                {
+                    int toAdd = 0;
+                    if (c.ToString().ToUpper() == c.ToString())
+                        toAdd += c - 38;
+                    else
+                        toAdd += c - 96;
+                    sum += toAdd;
+                    break;
+                }
+            }
+        }
+        PrintAnswer(sum);
+    }
 }
 
 class InputGetter
@@ -128,7 +180,6 @@ class InputGetter
     private const string filePath = @"C:\Users\newid\source\repos\Aoc 2022 College is Stressful Year\Aoc 2022 College is Stressful Year\inputs.txt"; // I can't be bothered to do this properly so uhhhhhhhhhhhhhhhhhhhhhhhhhh
     public static string[] GetStringInputs()
     {
-
         string[] lines = File.ReadAllLines(filePath);
         return lines;
     }
