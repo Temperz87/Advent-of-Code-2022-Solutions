@@ -8,7 +8,7 @@ class Program
 {
     private static void Main(string[] args)
     {
-        Day3();
+        Day3P2();
     }
 
     private static void PrintAnswer(object text) // Prints to console in a funny color and copies said answer to the clipboard so I can save 0.01 seconds 
@@ -26,7 +26,7 @@ class Program
         Console.ForegroundColor = ConsoleColor.White;
     }
 
-    private static void Day1() // Completed P1 in 2:42 with a rank of 928, P2 in 4:81 wiht a rank of 921, puzzle was opened in 0:02
+    private static void Day1() // Completed P1 in 2:42 with a rank of 928, P2 in 4:81 with a rank of 921, puzzle was opened in 0:02
     {
         string[] input = InputGetter.GetStringInputs();
         List<int> allCalories = new List<int>();
@@ -53,7 +53,7 @@ class Program
         PrintAnswer(allCalories[allCalories.Count - 1] + allCalories[allCalories.Count - 2] + allCalories[allCalories.Count - 3]); // for part 2
     }
 
-    public static void Day2P1() // Completed P1 in 12:48 with a rank of 4581, P2 in 19:30 with a rank of 4345, puzzle was opened in 0:02
+    public static void Day2P1() // Completed P1 in 12:48 with a rank of 4581, P2 in 19:30 with a rank of 4345, puzzle was opened in 0:03
     {
         string[] input = InputGetter.GetStringInputs();
         int score = 0;
@@ -121,7 +121,7 @@ class Program
         PrintAnswer(score);
     }
 
-    public static void DayP1()
+    public static void Day3P1() // Completed P1 in 14:04 with a rank of 4705, P2 in 21:03 with a rank of 4089, puzzle was opened in 0:01
     {
         string[] input = InputGetter.GetStringInputs();
         int sum = 0;
@@ -148,7 +148,7 @@ class Program
         PrintAnswer(sum);
     }
 
-    public static void Day3P2()
+    public static void Day3P2() // I only did this cuz I realized the writing the parts in the same function after the fact would take a lot of time so I copy pasted the first one and changed it a bit
     {
         string[] input = InputGetter.GetStringInputs();
         int sum = 0;
