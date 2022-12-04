@@ -8,7 +8,7 @@ class Program
 {
     private static void Main(string[] args)
     {
-        Day3P2();
+        Day4P2();
     }
 
     private static void PrintAnswer(object text) // Prints to console in a funny color and copies said answer to the clipboard so I can save 0.01 seconds 
@@ -172,6 +172,62 @@ class Program
             }
         }
         PrintAnswer(sum);
+    }
+
+    public static void Day4P1() // Completed P1 in 9:54 with a rank of 4562, P2 in 30:10 wiht a rnak of 9636, puzzle was opened in 0:03
+    {
+        string[] inputs = InputGetter.GetStringInputs();
+        int pair = 0;
+        foreach (string str in inputs) {
+            string[] split = str.Split(',');
+            string[] e1s = split[0].Split("-");
+            string[] e2s = split[1].Split("-");
+            
+            ElfPair e1 = new ElfPair(int.Parse(e1s[0]), int.Parse(e1s[1]));
+            ElfPair e2 = new ElfPair(int.Parse(e2s[0]), int.Parse(e2s[1]));
+            if ((e1.min <= e2.min && e1.max >= e2.max) || (e2.min <= e1.min && e2.max >= e1.max))
+                pair++;
+        }
+        PrintAnswer(pair);
+    }
+    public static void Day4P2()
+    {
+        /* What went wrong for me to take a while?
+         * for one, the problem was just harder in general
+         * for two, I am shit at boolean stuff, so that sucks
+         * for three, I forgot what the question was asking, so I could've finished 5 minutes earlier but last minute I removed the negation if the if statement
+         * If I hadn't forgotten what the question was asking, I would've kept the ! in the if statement and been done, simple mistakes like these (and reading better in general) are what I have to work on to do better
+        */
+        string[] inputs = InputGetter.GetStringInputs();
+        int pair = 0;
+        foreach (string str in inputs)
+        {
+            string[] split = str.Split(',');
+            string[] e1s = split[0].Split("-");
+            string[] e2s = split[1].Split("-");
+
+            ElfPair e1 = new ElfPair(int.Parse(e1s[0]), int.Parse(e1s[1]));
+            ElfPair e2 = new ElfPair(int.Parse(e2s[0]), int.Parse(e2s[1]));
+            if (!((e1.min < e2.min && e1.max < e2.min) || (e2.min < e1.min && e2.max < e1.min))) // I am losing my mind
+            {
+                pair++;
+                //Print("Solution: " + e1.min + "-" + e1.max + "," + e2.min + "-" + e2.max);
+            }
+            //else
+                //Print("Wrong: " + e1.min + "-" + e1.max + "," + e2.min + "-" + e2.max, ConsoleColor.Magenta);
+        }
+        PrintAnswer(pair);
+    }
+
+    public class ElfPair
+    {
+        public int max;
+        public int min;
+        public ElfPair(int min, int max)
+        {
+            this.min = min;
+            this.max = max;
+        }
     }
 }
 
