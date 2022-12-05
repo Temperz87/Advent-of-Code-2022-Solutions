@@ -8,7 +8,7 @@ class Program
 {
     private static void Main(string[] args)
     {
-        Day4P2();
+        Day5P2();
     }
 
     private static void PrintAnswer(object text) // Prints to console in a funny color and copies said answer to the clipboard so I can save 0.01 seconds 
@@ -174,15 +174,16 @@ class Program
         PrintAnswer(sum);
     }
 
-    public static void Day4P1() // Completed P1 in 9:54 with a rank of 4562, P2 in 30:10 wiht a rnak of 9636, puzzle was opened in 0:03
+    public static void Day4P1() // Completed P1 in 9:54 with a rank of 4562, P2 in 30:10 with a rank of 9636, puzzle was opened in 0:03
     {
         string[] inputs = InputGetter.GetStringInputs();
         int pair = 0;
-        foreach (string str in inputs) {
+        foreach (string str in inputs)
+        {
             string[] split = str.Split(',');
             string[] e1s = split[0].Split("-");
             string[] e2s = split[1].Split("-");
-            
+
             ElfPair e1 = new ElfPair(int.Parse(e1s[0]), int.Parse(e1s[1]));
             ElfPair e2 = new ElfPair(int.Parse(e2s[0]), int.Parse(e2s[1]));
             if ((e1.min <= e2.min && e1.max >= e2.max) || (e2.min <= e1.min && e2.max >= e1.max))
@@ -214,9 +215,256 @@ class Program
                 //Print("Solution: " + e1.min + "-" + e1.max + "," + e2.min + "-" + e2.max);
             }
             //else
-                //Print("Wrong: " + e1.min + "-" + e1.max + "," + e2.min + "-" + e2.max, ConsoleColor.Magenta);
+            //Print("Wrong: " + e1.min + "-" + e1.max + "," + e2.min + "-" + e2.max, ConsoleColor.Magenta);
         }
         PrintAnswer(pair);
+    }
+
+    public static void Day5P1()
+    {
+        string[] inputs = InputGetter.GetStringInputs();
+        //int sum = 0; // I wrote this line at 11:19 pm, every previous challenge had a sum to print at the end, so ima assume this one will too
+        List<char>[] allStacks = new List<char>[9];
+
+        List<char> stack0 = new List<char>();
+        stack0.Add('F');
+        stack0.Add('H');
+        stack0.Add('B');
+        stack0.Add('V');
+        stack0.Add('R');
+        stack0.Add('Q');
+        stack0.Add('D');
+        stack0.Add('P');
+        allStacks[0] = stack0;
+        stack0.Reverse();
+
+        List<char> stack1 = new List<char>();
+        stack1.Add('L');
+        stack1.Add('D');
+        stack1.Add('Z');
+        stack1.Add('Q');
+        stack1.Add('W');
+        stack1.Add('V');
+        allStacks[1] = stack1;
+        stack1.Reverse();
+
+        List<char> stack2 = new List<char>();
+        stack2.Add('H');
+        stack2.Add('L');
+        stack2.Add('Z');
+        stack2.Add('Q');
+        stack2.Add('G');
+        stack2.Add('R');
+        stack2.Add('P');
+        stack2.Add('C');
+        allStacks[2] = stack2;
+        stack2.Reverse();
+
+        List<char> stack3 = new List<char>();
+        stack3.Add('R');
+        stack3.Add('D');
+        stack3.Add('H');
+        stack3.Add('F');
+        stack3.Add('J');
+        stack3.Add('V');
+        stack3.Add('B');
+        allStacks[3] = stack3;
+        stack3.Reverse();
+
+        List<char> stack4 = new List<char>();
+        stack4.Add('Z');
+        stack4.Add('W');
+        stack4.Add('L');
+        stack4.Add('C');
+        allStacks[4] = stack4;
+        stack4.Reverse();
+
+        List<char> stack5 = new List<char>();
+        stack5.Add('J');
+        stack5.Add('R');
+        stack5.Add('P');
+        stack5.Add('N');
+        stack5.Add('T');
+        stack5.Add('G');
+        stack5.Add('V');
+        stack5.Add('M');
+        allStacks[5] = stack5;
+        stack5.Reverse();
+
+        List<char> stack6 = new List<char>();
+        stack6.Add('J');
+        stack6.Add('R');
+        stack6.Add('L');
+        stack6.Add('V');
+        stack6.Add('M');
+        stack6.Add('B');
+        stack6.Add('S');
+        allStacks[6] = stack6;
+        stack6.Reverse();
+
+        List<char> stack7 = new List<char>();
+        stack7.Add('D');
+        stack7.Add('P');
+        stack7.Add('J');
+        allStacks[7] = stack7;
+        stack7.Reverse();
+
+        List<char> stack8 = new List<char>();
+        stack8.Add('D');
+        stack8.Add('C');
+        stack8.Add('N');
+        stack8.Add('W');
+        stack8.Add('V');
+        allStacks[8] = stack8;
+        stack8.Reverse();
+
+        for (int i = 10; i < inputs.Length; i++)
+        {
+            string input = inputs[i];
+            Print(input);
+            int toMove = int.Parse(input.Substring(input.IndexOf("move ") + 5, input.IndexOf(" from") - 5).Trim());
+            int from = int.Parse(input.Substring(input.IndexOf("from ") + 5, input.IndexOf(" to") - input.IndexOf("from ") - 5).Trim());
+            int to = int.Parse(input.Substring(input.IndexOf("to ") + 3).Trim());
+            Print(toMove + " : " + from + " : " + to);
+            for (int j = 0; j < toMove; j++)
+            {
+                //Print("moved");
+                char c = allStacks[from - 1][0];
+                allStacks[from - 1].RemoveAt(0);
+                allStacks[to - 1].Insert(0, c);
+            }
+        }
+        String answer = "";
+        for (int i = 0; i < 9; i++)
+            if (allStacks[i].Count() > 0)
+                answer += allStacks[i][0].ToString();
+        PrintAnswer(answer);
+    }
+
+    public static void Day5P2()
+    {
+        string[] inputs = InputGetter.GetStringInputs();
+        //int sum = 0; // I wrote this line at 11:19 pm, every previous challenge had a sum to print at the end, so ima assume this one will too
+        List<char>[] allStacks = new List<char>[9];
+
+        List<char> stack0 = new List<char>();
+        stack0.Add('F');
+        stack0.Add('H');
+        stack0.Add('B');
+        stack0.Add('V');
+        stack0.Add('R');
+        stack0.Add('Q');
+        stack0.Add('D');
+        stack0.Add('P');
+        allStacks[0] = stack0;
+        stack0.Reverse();
+
+        List<char> stack1 = new List<char>();
+        stack1.Add('L');
+        stack1.Add('D');
+        stack1.Add('Z');
+        stack1.Add('Q');
+        stack1.Add('W');
+        stack1.Add('V');
+        allStacks[1] = stack1;
+        stack1.Reverse();
+
+        List<char> stack2 = new List<char>();
+        stack2.Add('H');
+        stack2.Add('L');
+        stack2.Add('Z');
+        stack2.Add('Q');
+        stack2.Add('G');
+        stack2.Add('R');
+        stack2.Add('P');
+        stack2.Add('C');
+        allStacks[2] = stack2;
+        stack2.Reverse();
+
+        List<char> stack3 = new List<char>();
+        stack3.Add('R');
+        stack3.Add('D');
+        stack3.Add('H');
+        stack3.Add('F');
+        stack3.Add('J');
+        stack3.Add('V');
+        stack3.Add('B');
+        allStacks[3] = stack3;
+        stack3.Reverse();
+
+        List<char> stack4 = new List<char>();
+        stack4.Add('Z');
+        stack4.Add('W');
+        stack4.Add('L');
+        stack4.Add('C');
+        allStacks[4] = stack4;
+        stack4.Reverse();
+
+        List<char> stack5 = new List<char>();
+        stack5.Add('J');
+        stack5.Add('R');
+        stack5.Add('P');
+        stack5.Add('N');
+        stack5.Add('T');
+        stack5.Add('G');
+        stack5.Add('V');
+        stack5.Add('M');
+        allStacks[5] = stack5;
+        stack5.Reverse();
+
+        List<char> stack6 = new List<char>();
+        stack6.Add('J');
+        stack6.Add('R');
+        stack6.Add('L');
+        stack6.Add('V');
+        stack6.Add('M');
+        stack6.Add('B');
+        stack6.Add('S');
+        allStacks[6] = stack6;
+        stack6.Reverse();
+
+        List<char> stack7 = new List<char>();
+        stack7.Add('D');
+        stack7.Add('P');
+        stack7.Add('J');
+        allStacks[7] = stack7;
+        stack7.Reverse();
+
+        List<char> stack8 = new List<char>();
+        stack8.Add('D');
+        stack8.Add('C');
+        stack8.Add('N');
+        stack8.Add('W');
+        stack8.Add('V');
+        allStacks[8] = stack8;
+        stack8.Reverse();
+
+        for (int i = 10; i < inputs.Length; i++)
+        {
+            string input = inputs[i];
+            Print(input);
+            int toMove = int.Parse(input.Substring(input.IndexOf("move ") + 5, input.IndexOf(" from") - 5).Trim());
+            int from = int.Parse(input.Substring(input.IndexOf("from ") + 5, input.IndexOf(" to") - input.IndexOf("from ") - 5).Trim());
+            int to = int.Parse(input.Substring(input.IndexOf("to ") + 3).Trim());
+            Print(toMove + " : " + from + " : " + to);
+            List<char> toReverse = new List<char>();
+            for (int j = 0; j < toMove; j++)
+            {
+                char c = allStacks[from - 1][0];
+                allStacks[from - 1].RemoveAt(0);
+                toReverse.Add(c);
+            }
+            toReverse.Reverse();
+            foreach (char c in toReverse)
+            {
+                allStacks[to - 1].Insert(0, c);
+            }
+        }
+        String answer = "";
+        for (int i = 0; i < 9; i++)
+            if (allStacks[i].Count() > 0)
+                answer += allStacks[i][0].ToString();
+        PrintAnswer(answer);
     }
 
     public class ElfPair
