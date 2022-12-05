@@ -220,11 +220,11 @@ class Program
         PrintAnswer(pair);
     }
 
-    public static void Day5P1()
+    public static void Day5P1() // Completed P1 in 29:36 with a rank of 5408, P2 in 35:29 with a rank of 5417, puzzle was opened in 0:01
     {
         string[] inputs = InputGetter.GetStringInputs();
-        //int sum = 0; // I wrote this line at 11:19 pm, every previous challenge had a sum to print at the end, so ima assume this one will too
-        List<char>[] allStacks = new List<char>[9];
+        //int sum = 0; // I wrote this line at 11:19 pm, every previous challenge had a sum to print at the end, so ima assume this one will too : I was wrong.....
+        List<char>[] allStacks = new List<char>[9]; // I thought it'd be faster not to write something to parse the inputs, but i instead fumbled on parsing them manually so fuck, and I also couldn't use test input, so double fuck
 
         List<char> stack0 = new List<char>();
         stack0.Add('F');
@@ -344,7 +344,6 @@ class Program
     public static void Day5P2()
     {
         string[] inputs = InputGetter.GetStringInputs();
-        //int sum = 0; // I wrote this line at 11:19 pm, every previous challenge had a sum to print at the end, so ima assume this one will too
         List<char>[] allStacks = new List<char>[9];
 
         List<char> stack0 = new List<char>();
