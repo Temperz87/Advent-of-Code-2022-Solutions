@@ -477,8 +477,9 @@ class Program
         PrintAnswer(answer);
     }
 
-    public static void Day6()
+    public static void Day6() // Completed P1 in 13:53 with a rank of 8668, P2 in 20:22 with a rank of 9773, puzzle was opened in 0:02
     {
+        // I read the question wrong like 5 times so this was harder than it had to be, this is probably the easiest puzzle so far
         string inputs = InputGetter.GetStringInput();
         // I'm not predicting a sum here, so no int sum (written at 12:42 am on December 5th)
         for (int i = 13; i < inputs.Length; i++)
