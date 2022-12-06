@@ -8,7 +8,7 @@ class Program
 {
     private static void Main(string[] args)
     {
-        Day5P2();
+        Day6();
     }
 
     private static void PrintAnswer(object text) // Prints to console in a funny color and copies said answer to the clipboard so I can save 0.01 seconds 
@@ -19,7 +19,7 @@ class Program
         Console.ForegroundColor = ConsoleColor.White;
     }
 
-    private static void Print(string text, ConsoleColor color = ConsoleColor.Green) // Just an easy function to Print, as typing Console.WriteLine() takes more time, and also colors are easier to do this way for me
+    private static void Print(object text, ConsoleColor color = ConsoleColor.Green) // Just an easy function to Print, as typing Console.WriteLine() takes more time, and also colors are easier to do this way for me
     {
         Console.ForegroundColor = color;
         Console.WriteLine(text.ToString());
@@ -220,6 +220,17 @@ class Program
         PrintAnswer(pair);
     }
 
+    public class ElfPair
+    {
+        public int max;
+        public int min;
+        public ElfPair(int min, int max)
+        {
+            this.min = min;
+            this.max = max;
+        }
+    }
+
     public static void Day5P1() // Completed P1 in 29:36 with a rank of 5408, P2 in 35:29 with a rank of 5417, puzzle was opened in 0:01
     {
         string[] inputs = InputGetter.GetStringInputs();
@@ -341,7 +352,7 @@ class Program
         PrintAnswer(answer);
     }
 
-    public static void Day5P2()
+    public static void Day5P2() // This day was when shit got real, like day 5 was WAY harder than the last day, as of writing half of the people have a gold star on day 5 than did on day 4, and about 1/4 compared to day 1
     {
         string[] inputs = InputGetter.GetStringInputs();
         List<char>[] allStacks = new List<char>[9];
@@ -466,14 +477,33 @@ class Program
         PrintAnswer(answer);
     }
 
-    public class ElfPair
+    public static void Day6()
     {
-        public int max;
-        public int min;
-        public ElfPair(int min, int max)
+        string inputs = InputGetter.GetStringInput();
+        // I'm not predicting a sum here, so no int sum (written at 12:42 am on December 5th)
+        for (int i = 13; i < inputs.Length; i++)
         {
-            this.min = min;
-            this.max = max;
+            List<char> allChars = new List<char>();
+            bool multipleOccurences = false;
+            for (int j = i; j >= i - 13; j--)
+                allChars.Add(inputs[j]);
+            foreach (char c in allChars)
+            {
+                int all = 0;
+                foreach (char d in allChars)
+                    if (d == c)
+                        all++;
+                if (all > 1)
+                {
+                    multipleOccurences = true;
+                    break;
+                }
+            }
+            if (!multipleOccurences)
+            {
+                PrintAnswer(i + 1);
+                return;
+            }
         }
     }
 }
@@ -484,6 +514,11 @@ class InputGetter
     public static string[] GetStringInputs()
     {
         string[] lines = File.ReadAllLines(filePath);
+        return lines;
+    }
+    public static string GetStringInput()
+    {
+        string lines = File.ReadAllText(filePath);
         return lines;
     }
 
