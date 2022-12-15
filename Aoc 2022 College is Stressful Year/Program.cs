@@ -8,7 +8,7 @@ class Program
 {
     private static void Main(string[] args)
     {
-        Day7P2();
+        Day8P2();
     }
 
     private static void PrintAnswer(object text) // Prints to console in a funny color and copies said answer to the clipboard so I can save 0.01 seconds 
@@ -604,6 +604,140 @@ class Program
             }
         }
     }
+
+    public static void Day8P1()
+    {
+        string[] inputs = InputGetter.GetStringInputs(); // easier to handle this as a string[] then parse it into an int[][]
+        int visible = 0;
+        for (int i = 1; i < inputs.Length - 1; i++)
+        {
+            for (int j = 1; j < inputs[i].Length - 1; j++)
+            {
+                int current = int.Parse(inputs[i][j].ToString());
+                bool setVisible = true;
+                for (int k = i - 1; k >= 0; k--)
+                {
+                    if (int.Parse(inputs[k][j].ToString()) >= current)
+                    {
+                        setVisible = false;
+                        break;
+                    }
+                }
+
+                if (setVisible)
+                {
+                    visible++;
+                    continue;
+                }
+
+                setVisible = true;
+                for (int k = i + 1; k < inputs.Length; k++)
+                {
+                    if (int.Parse(inputs[k][j].ToString()) >= current)
+                    {
+                        setVisible = false;
+                        break;
+                    }
+                }
+
+                if (setVisible)
+                {
+                    visible++;
+                    continue;
+                }
+
+                setVisible = true;
+                for (int k = j - 1; k >= 0; k--)
+                {
+                    if (int.Parse(inputs[i][k].ToString()) >= current)
+                    {
+                        setVisible = false;
+                        break;
+                    }
+                }
+
+                if (setVisible)
+                {
+                    visible++;
+                    continue;
+                }
+
+                setVisible = true;
+                for (int k = j + 1; k < inputs[i].Length; k++)
+                {
+                    if (int.Parse(inputs[i][k].ToString()) >= current)
+                    {
+                        setVisible = false;
+                        break;
+                    }
+                }
+
+                if (setVisible)
+                {
+                    visible++;
+                    continue;
+                }
+            }
+        }
+        PrintAnswer(visible + (inputs.Length * 2) + (inputs[0].Length * 2) - 4);
+    }
+    
+    public static void Day8P2()
+    {
+        string[] inputs = InputGetter.GetStringInputs(); // easier to handle this as a string[] then parse it into an int[][]
+        int biggestView = 0;
+        for (int i = 1; i < inputs.Length - 1; i++)
+        {
+            for (int j = 1; j < inputs[i].Length - 1; j++)
+            {
+                int current = int.Parse(inputs[i][j].ToString());
+                int seeUp = 0;
+                for (int k = i - 1; k >= 0; k--)
+                {
+                    seeUp++;
+                    if (int.Parse(inputs[k][j].ToString()) >= current)
+                    {
+                        break;
+                    }
+                }
+
+                int seeDown = 0;
+                for (int k = i + 1; k < inputs.Length; k++)
+                {
+                    seeDown++;
+                    if (int.Parse(inputs[k][j].ToString()) >= current)
+                    {
+                        break;
+                    }
+                }
+
+                int seeLeft = 0;
+                for (int k = j - 1; k >= 0; k--)
+                {
+                    seeLeft++;
+                    if (int.Parse(inputs[i][k].ToString()) >= current)
+                    {
+                        break;
+                    }
+                }
+
+                int seeRight = 0;
+                for (int k = j + 1; k < inputs[i].Length; k++)
+                {
+                    seeRight++;
+                    if (int.Parse(inputs[i][k].ToString()) >= current)
+                    {
+                        break;
+                    }
+                }
+
+                int scenicScore = seeUp * seeLeft * seeRight * seeDown;
+                if (scenicScore > biggestView)
+                    biggestView = scenicScore;
+            }
+        }
+        PrintAnswer(biggestView);
+    }
 }
 
 class InputGetter
@@ -618,6 +752,17 @@ class InputGetter
     {
         string lines = File.ReadAllText(filePath);
         return lines;
+    }
+
+    public static int[] GetIntInputs()
+    {
+        string[] lines = File.ReadAllLines(filePath);
+        int[] ints = new int[lines.Length];
+        for (int i = 0; i < lines.Length; i++)
+        {
+            ints[i] = int.Parse(lines[i]);
+        }
+        return ints;
     }
 
     public static long[] GetLongInputs()
