@@ -8,7 +8,7 @@ class Program
 {
     private static void Main(string[] args)
     {
-        Day6();
+        Day7P2();
     }
 
     private static void PrintAnswer(object text) // Prints to console in a funny color and copies said answer to the clipboard so I can save 0.01 seconds 
@@ -503,6 +503,103 @@ class Program
             if (!multipleOccurences)
             {
                 PrintAnswer(i + 1);
+                return;
+            }
+        }
+    }
+
+    public static void Day7P1()
+    {
+        // This is the day i stopped racing as I was tired
+        string[] input = InputGetter.GetStringInputs();
+        int sum = 0; // 11:27 pm on 12/6/2022 I'm predicting a sum
+        string dir = "";
+        int lastDirSize = 0;
+        Stack<int> lastDir = new Stack<int>(); // Because I understand how recursion works, future employers, I knew that a stackw would work here :D
+
+        foreach (string line in input)
+        {
+            if (line.Contains("dir"))
+                continue;
+            else if (line == "$ cd ..")
+            {
+                if (lastDirSize <= 100000)
+                    sum += lastDirSize;
+                lastDirSize += lastDir.Pop();
+                Print("Popping " + lastDirSize);
+            }
+            else if (line.Contains("cd")) // You will notice that this line sucks because if a filename contains cd in it everything breaks, I fixed that in part 2
+            {
+                Print("Pushing " + lastDirSize);
+                lastDir.Push(lastDirSize);
+                lastDirSize = 0;
+            }
+            else if (!line.Contains("$"))
+            {
+                lastDirSize += int.Parse(line.Substring(0, line.IndexOf(" ")));
+            }
+        }
+        lastDirSize = lastDir.Pop(); // You will notice that I neglected to pop a "couple" ints off the stack, I fixed this in part 2
+        if (lastDirSize <= 100000)
+            sum += lastDirSize;
+        PrintAnswer(sum);
+    }
+
+    public static void Day7P2()
+    {
+        string[] input = InputGetter.GetStringInputs();
+        int lastDirSize = 0;
+        Stack<int> lastDir = new Stack<int>();
+        List<int> allDirs = new List<int>();
+
+        string dir = "";
+
+        foreach (string line in input)
+        {
+            if (line.Contains("dir"))
+                continue;
+            else if (line == "$ cd ..")
+            {
+                dir = dir.Substring(0, dir.LastIndexOf("/"));
+                Print("$ cd " + dir, ConsoleColor.White);
+                Print("Popping " + lastDirSize);
+                allDirs.Add(lastDirSize);
+                lastDirSize += lastDir.Pop();
+            }
+            else if (line[2] == 'c' && line[3] == 'd')
+            {
+                lastDir.Push(lastDirSize);
+                dir += "/" + line.Substring(line.IndexOf("cd ") + 3);
+                Print("$ cd " + dir, ConsoleColor.White);
+                Print("Pushing " + lastDirSize);
+                lastDirSize = 0;
+            }
+            else if (!line.Contains("$"))
+            {
+                lastDirSize += int.Parse(line.Substring(0, line.IndexOf(" ")));
+            }
+        }
+        Print("------------------------");
+        while (lastDir.Count > 0)
+        {
+            allDirs.Add(lastDirSize);
+            lastDirSize += lastDir.Pop();
+            dir = dir.Substring(0, dir.LastIndexOf("/"));
+            Print("$ cd " + dir, ConsoleColor.White);
+            Print("Popping " + lastDirSize);
+        }
+        allDirs.Add(lastDirSize);
+        allDirs.Sort();
+        int unusedSpace = 70000000 - allDirs[allDirs.Count() - 1];
+        int toDelete = 30000000 - unusedSpace;
+        Print(allDirs[allDirs.Count() - 1], ConsoleColor.Green); // top most dir
+        Print(unusedSpace, ConsoleColor.Magenta);
+        Print(toDelete, ConsoleColor.Blue);
+        foreach (int i in allDirs)
+        {
+            if (i >= toDelete)
+            {
+                PrintAnswer(i);
                 return;
             }
         }
